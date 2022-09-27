@@ -78,6 +78,21 @@ function addUser(user) {
   users["users_list"].push(user);
 }
 
+app.delete("/users/:id", (req, res) => {
+  const userToDelete = req.params["id"];
+  const result = deleteUser(userToDelete);
+  if (result == -1) {
+    res.status(404).end();
+  } else {
+    res.status(200).end();
+  }
+});
+
+function deleteUser(id) {
+  const i = users["users_list"].findIndex((user) => user["id"] === id);
+  users["users_list"].splice(i, 1);
+  return i;
+}
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
