@@ -6,10 +6,14 @@ import axios from "axios";
 function MyApp() {
   const [characters, setCharacters] = useState([]);
   function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+    makeDeleteCall(index).then((result) => {
+      if (result && result.status === 204) {
+        const updated = characters.filter((character, i) => {
+          return i !== index;
+        });
+        setCharacters(updated);
+      }
     });
-    setCharacters(updated);
   }
 
   useEffect(() => {
@@ -45,6 +49,18 @@ function MyApp() {
     }
   }
 
+  async function makeDeleteCall(index) {
+    const delID = characters[index].id;
+    try {
+      const response = await axios.delete(
+        "http://localhost:5000/users/" + delID
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
   return (
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />

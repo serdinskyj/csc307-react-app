@@ -113,7 +113,7 @@ app.delete("/users/:id", (req, res) => {
   if (result == -1) {
     res.status(404).end();
   } else {
-    res.status(200).end();
+    res.status(204).end();
   }
 });
 
