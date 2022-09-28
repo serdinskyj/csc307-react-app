@@ -93,8 +93,8 @@ function findUserById(id) {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.status(201).end();
+  const updatedUser = addUser(userToAdd);
+  res.status(201).send(updatedUser).end();
 });
 
 function addUser(user) {
@@ -104,6 +104,7 @@ function addUser(user) {
     job: user.job,
   };
   users["users_list"].push(userWithID);
+  return userWithID;
 }
 
 app.delete("/users/:id", (req, res) => {
