@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const uuid = require("uuid");
 
 const app = express();
 const port = 5000;
@@ -97,7 +98,12 @@ app.post("/users", (req, res) => {
 });
 
 function addUser(user) {
-  users["users_list"].push(user);
+  const userWithID = {
+    id: String(uuid.v4()),
+    name: user.name,
+    job: user.job,
+  };
+  users["users_list"].push(userWithID);
 }
 
 app.delete("/users/:id", (req, res) => {
