@@ -119,7 +119,9 @@ app.delete("/users/:id", (req, res) => {
 
 function deleteUserById(id) {
   const i = users["users_list"].findIndex((user) => user["id"] === id);
-  users["users_list"].splice(i, 1);
+  if (i !== -1){
+    users["users_list"].splice(i, 1);
+  }
   return i;
 }
 app.listen(port, () => {
